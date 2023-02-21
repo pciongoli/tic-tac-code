@@ -3,6 +3,14 @@
    flex-direction: column;
    align-items: center;
    margin-top: 20px;
+   padding: 20px;
+   border-radius: 5px;
+}
+
+body {
+   background: linear-gradient(to bottom, #420c83, #880e4f);
+   color: white;
+   font-family: "Handlee", cursive;
 }
 
 .row {
@@ -12,12 +20,14 @@
 .cell {
    width: 80px;
    height: 80px;
-   border: 1px solid black;
+   border: 1px solid rgb(14, 1, 1);
    display: flex;
    justify-content: center;
    align-items: center;
    font-size: 24px;
    cursor: pointer;
+   background-color: rgba(255, 255, 255, 0.3);
+   color: white;
 }
 
 .message {
@@ -25,6 +35,10 @@
    font-size: 18px;
    font-weight: bold;
    text-align: center;
+   background-color: rgba(255, 255, 255, 0.8);
+   padding: 10px;
+   border-radius: 5px;
+   color: #4a148c;
 }
 
 .hidden {
@@ -32,7 +46,8 @@
 }
 
 .jumbotron {
-   background-color: #f8f9fa;
+   background: linear-gradient(to bottom, #4a148c, #880e4f);
+   color: white;
    padding: 0.5rem;
    margin-top: 0.5rem;
    margin-bottom: 0.5rem;
@@ -44,6 +59,17 @@
    justify-content: center;
    align-items: center;
    height: 25vh;
+}
+
+.reset-button {
+   margin-top: 20px;
+   font-size: 16px;
+   font-weight: bold;
+   padding: 10px 20px;
+   border-radius: 5px;
+   background-color: #007bff;
+   color: white;
+   cursor: pointer;
 }
 
 @media (max-width: 992px) {
@@ -111,5 +137,29 @@
 
    .jumbotron {
       font-size: 7.5vw;
+   }
+}
+
+@media (min-width: 576px) {
+   .reset-button {
+      margin-top: 30px;
+   }
+}
+
+@media (min-width: 768px) {
+   .reset-button {
+      margin-top: 40px;
+   }
+}
+
+@media (min-width: 992px) {
+   .reset-button {
+      margin-top: 50px;
+   }
+}
+
+@media (min-width: 1200px) {
+   .reset-button {
+      margin-top: 60px;
    }
 }
