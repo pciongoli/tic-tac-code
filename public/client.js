@@ -36,23 +36,23 @@ function render() {
          message.textContent = `Player ${gameState.winner} wins!`;
       }
       message.classList.remove("hidden");
-
-      // Reset the game shortly after a player wins
-      message.addEventListener(
-         "animationend",
-         () => {
-            setTimeout(() => {
-               gameState = {
-                  board: ["", "", "", "", "", "", "", "", ""],
-                  player: "X",
-                  winner: null,
-               };
-               socket.emit("gameState", gameState);
-            }, 1000);
-         },
-         { once: true }
-      );
    } else {
       message.classList.add("hidden");
    }
 }
+
+// Reset the game shortly after a player wins
+message.addEventListener(
+   "animationend",
+   () => {
+      setTimeout(() => {
+         gameState = {
+            board: ["", "", "", "", "", "", "", "", ""],
+            player: "X",
+            winner: null,
+         };
+         socket.emit("gameState", gameState);
+      }, 1000);
+   },
+   { once: true }
+);
