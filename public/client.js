@@ -5,6 +5,7 @@ const cells = document.querySelectorAll(".cell");
 let gameState;
 
 const socket = io("https://tic-tac-code.herokuapp.com/");
+// const socket = io("http://localhost:3000/");
 
 socket.on("connect", () => {
    console.log("Connected to server");
@@ -36,23 +37,26 @@ function render() {
          message.textContent = `Player ${gameState.winner} wins!`;
       }
       message.classList.remove("hidden");
+
+      // Reset the game shortly after a player wins
+      message.addEventListener(
+         "animationend",
+         () => {
+            console.log("animationend fired"); // log message to check if event is firing
+            setTimeout(() => {
+               gameState = {
+                  board: ["", "", "", "", "", "", "", "", ""],
+                  player: "X",
+                  winner: null,
+               };
+               console.log("gameState after reset:", gameState); // log message to check if gameState is being reset
+               socket.emit("gameState", gameState);
+               console.log("gameState sent to server:", gameState); // log message to check if gameState is being sent to server
+            }, 1000);
+         },
+         { once: true }
+      );
    } else {
       message.classList.add("hidden");
    }
 }
-
-// Reset the game shortly after a player wins
-message.addEventListener(
-   "animationend",
-   () => {
-      setTimeout(() => {
-         gameState = {
-            board: ["", "", "", "", "", "", "", "", ""],
-            player: "X",
-            winner: null,
-         };
-         socket.emit("gameState", gameState);
-      }, 1000);
-   },
-   { once: true }
-);
