@@ -25,6 +25,17 @@ board.addEventListener("click", (event) => {
    }
 });
 
+const resetButton = document.getElementById("reset");
+
+resetButton.addEventListener("click", () => {
+   gameState = {
+      board: ["", "", "", "", "", "", "", "", ""],
+      player: "X",
+      winner: null,
+   };
+   socket.emit("gameState", gameState);
+});
+
 function render() {
    for (let i = 0; i < gameState.board.length; i++) {
       cells[i].textContent = gameState.board[i];
@@ -40,11 +51,9 @@ function render() {
 
       // Reset the game shortly after a player wins
       setTimeout(() => {
-         gameState = {
-            board: ["", "", "", "", "", "", "", "", ""],
-            player: "X",
-            winner: null,
-         };
+         gameState.board = ["", "", "", "", "", "", "", "", ""];
+         gameState.player = "X";
+         gameState.winner = null;
          socket.emit("gameState", gameState);
       }, 1000);
    } else {
