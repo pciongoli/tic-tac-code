@@ -4,8 +4,8 @@ const cells = document.querySelectorAll(".cell");
 
 let gameState;
 
-// const socket = io("https://tic-tac-code.herokuapp.com/");
-const socket = io("http://localhost:3000/");
+const socket = io("https://tic-tac-code.herokuapp.com/");
+// const socket = io("http://localhost:3000/");
 
 socket.on("connect", () => {
    console.log("Connected to server");
