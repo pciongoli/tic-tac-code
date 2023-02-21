@@ -1,6 +1,7 @@
 const board = document.querySelector(".board");
 const message = document.querySelector(".message");
 const cells = document.querySelectorAll(".cell");
+const resetButton = document.getElementById("reset-button");
 
 let gameState;
 
@@ -25,6 +26,10 @@ board.addEventListener("click", (event) => {
    }
 });
 
+resetButton.addEventListener("click", () => {
+   socket.emit("reset");
+});
+
 function render() {
    for (let i = 0; i < gameState.board.length; i++) {
       cells[i].textContent = gameState.board[i];
@@ -38,8 +43,6 @@ function render() {
       }
       message.classList.remove("hidden");
    } else {
-      message.classList.add("hidden");
-
       // Update the player turn message
       const playerTurnMessage = document.querySelector(".player-turn");
       if (gameState.player === "X") {
@@ -47,5 +50,6 @@ function render() {
       } else {
          playerTurnMessage.textContent = "Player O make your move!";
       }
+      message.classList.add("hidden");
    }
 }

@@ -14,7 +14,7 @@ server.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-   res.sendFile(__dirname + "/public/index.html");
+   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -34,19 +34,31 @@ io.on("connection", (socket) => {
    // Handle incoming moves
    socket.on("move", (index) => {
       // Update the game state with the new move
-      gameState.board[index] = gameState.player;
+      if (gameState.board[index] === "" && !gameState.winner) {
+         gameState.board[index] = gameState.player;
 
-      // Check for a winner
-      if (checkForWinner(gameState.board)) {
-         gameState.winner = gameState.player;
-      } else if (checkForTie(gameState.board)) {
-         gameState.winner = "tie";
+         // Check for a winner
+         if (checkForWinner(gameState.board)) {
+            gameState.winner = gameState.player;
+         } else if (checkForTie(gameState.board)) {
+            gameState.winner = "tie";
+         }
+
+         // Switch to the other player's turn
+         gameState.player = gameState.player === "X" ? "O" : "X";
+
+         // Broadcast the new game state to all players
+         io.emit("gameState", gameState);
       }
+   });
 
-      // Switch to the other player's turn
-      gameState.player = gameState.player === "X" ? "O" : "X";
-
-      // Broadcast the new game state to all players
+   // Handle reset
+   socket.on("reset", () => {
+      gameState = {
+         board: ["", "", "", "", "", "", "", "", ""],
+         player: "X",
+         winner: null,
+      };
       io.emit("gameState", gameState);
    });
 
