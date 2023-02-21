@@ -4,8 +4,8 @@ const cells = document.querySelectorAll(".cell");
 
 let gameState;
 
-const socket = io("https://tic-tac-code.herokuapp.com/");
-// const socket = io("http://localhost:3000/");
+// const socket = io("https://tic-tac-code.herokuapp.com/");
+const socket = io("http://localhost:3000/");
 
 socket.on("connect", () => {
    console.log("Connected to server");
@@ -25,17 +25,6 @@ board.addEventListener("click", (event) => {
    }
 });
 
-const resetButton = document.getElementById("reset");
-
-resetButton.addEventListener("click", () => {
-   gameState = {
-      board: ["", "", "", "", "", "", "", "", ""],
-      player: "X",
-      winner: null,
-   };
-   socket.emit("gameState", gameState);
-});
-
 function render() {
    for (let i = 0; i < gameState.board.length; i++) {
       cells[i].textContent = gameState.board[i];
@@ -48,15 +37,15 @@ function render() {
          message.textContent = `Player ${gameState.winner} wins!`;
       }
       message.classList.remove("hidden");
-
-      // Reset the game shortly after a player wins
-      setTimeout(() => {
-         gameState.board = ["", "", "", "", "", "", "", "", ""];
-         gameState.player = "X";
-         gameState.winner = null;
-         socket.emit("gameState", gameState);
-      }, 1000);
    } else {
       message.classList.add("hidden");
+
+      // Update the player turn message
+      const playerTurnMessage = document.querySelector(".player-turn");
+      if (gameState.player === "X") {
+         playerTurnMessage.textContent = "Player X make your move!";
+      } else {
+         playerTurnMessage.textContent = "Player O make your move!";
+      }
    }
 }

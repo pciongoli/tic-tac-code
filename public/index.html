@@ -2,9 +2,21 @@
 <html>
    <head>
       <title>Multiplayer Tic-Tac-Toe</title>
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+         crossorigin="anonymous"
+      />
       <link rel="stylesheet" href="style.css" />
    </head>
    <body>
+      <div class="container">
+         <div>
+            <h1 class="jumbotron text-center">Tic-Tac-Code!</h1>
+            <h4 class="text-center player-turn">Player X make your move!</h4>
+         </div>
+      </div>
       <div class="board">
          <div class="row">
             <div class="cell" data-index="0"></div>
@@ -22,10 +34,6 @@
             <div class="cell" data-index="8"></div>
          </div>
       </div>
-      <div>
-         <button id="reset">Reset Game</button>
-      </div>
-
       <div class="message hidden"></div>
 
       <script src="/socket.io/socket.io.js"></script>
